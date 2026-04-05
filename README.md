@@ -1,85 +1,199 @@
 # 📰 Fake News Detection with Evidence
 
-**A Hybrid AI Approach for News Credibility Assessment**
+<div align="center">
 
-This project is a **Fake News Detection Web Application** built with Python and Streamlit. It goes beyond simple classification by combining **Machine Learning (Logistic Regression)** with **Fact-Based Evidence Retrieval (Wikipedia)** to provide explainable and trustworthy results.
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![NLTK](https://img.shields.io/badge/NLTK-3DDC84?style=for-the-badge&logo=python&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+
+**A Hybrid AI approach combining Machine Learning with Real-Time Evidence Retrieval for explainable news credibility assessment.**
+
+[Features](#-features) · [Installation](#-installation) · [Architecture](#-architecture) · [Roadmap](#-roadmap)
+
+</div>
 
 ---
 
-## 🚀 Features
+## 📌 Overview
 
-*   **Hybrid Analysis**: Combines linguistic pattern recognition with factual cross-referencing.
-*   **ML Classification**: Predicts if text is "Fake" or "Real" using a TF-IDF + Logistic Regression pipeline.
-*   **Evidence Retrieval**: Automatically searches Wikipedia to find context related to the claim.
-*   **Explainable Verdict**: Provides a human-readable interpretation (e.g., "Credible", "Uncertain", "Potentially Misleading") based on model confidence and evidence availability.
-*   **Confidence Scoring**: Displays the model's certainty percentage.
+**Fake News Detection with Evidence** goes beyond binary classification. It fuses a TF-IDF + Logistic Regression pipeline with Wikipedia-based evidence retrieval to give users not just a prediction, but a *reason* — making results transparent, explainable, and trustworthy.
+
+---
+
+## ✨ Features
+
+| Feature | Description |
+|---|---|
+| 🤖 **ML Classification** | Predicts "Fake" or "Real" using a TF-IDF + Logistic Regression pipeline |
+| 🔍 **Evidence Retrieval** | Fetches real-time Wikipedia context for key claims |
+| ⚖️ **Explainable Verdict** | Combines model confidence + evidence availability into a human-readable result |
+| 📊 **Confidence Scoring** | Displays the model's certainty as a percentage |
+| 🧠 **NLP Preprocessing** | Tokenization, stopword removal, and lemmatization via NLTK |
+| 🌐 **Interactive UI** | Clean, easy-to-use Streamlit web interface |
+
+---
 
 ## 🛠️ Tech Stack
 
-*   **Python**: Core programming language.
-*   **Streamlit**: For the interactive web interface.
-*   **Scikit-Learn**: For the Machine Learning pipeline (TF-IDF, Logistic Regression).
-*   **NLTK**: For Natural Language Processing (Tokenization, Stopwords, Lemmatization).
-*   **Wikipedia-API**: For real-time evidence fetching.
+- **Language:** Python 3.8+
+- **Web Framework:** Streamlit
+- **ML Pipeline:** Scikit-Learn (TF-IDF Vectorizer + Logistic Regression)
+- **NLP:** NLTK (Tokenization, Stopwords, Lemmatization)
+- **Evidence Source:** Wikipedia API (`wikipedia-api`)
+- **Serialization:** Pickle (`.pkl` model artifacts)
 
 ---
 
-## 📦 Installation
+## 📁 Project Structure
 
-Clone the repository and install the dependencies.
+```
+Fake-News-Detection-with-Evidence/
+│
+├── model/
+│   ├── model.pkl            # Trained Logistic Regression model
+│   └── tfidf.pkl            # Fitted TF-IDF vectorizer
+│
+├── app.py                   # Streamlit web application
+├── train_model.py           # Model training script
+├── utils.py                 # Preprocessing & evidence retrieval utilities
+├── requirements.txt         # Python dependencies
+└── README.md
+```
+
+---
+
+## ⚙️ Installation
+
+### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd fake-news-detection-app
+git clone https://github.com/ShreeKumbhar/Fake-News-Detection-with-Evidence.git
+cd Fake-News-Detection-with-Evidence
+```
+
+### 2. Create a Virtual Environment (Recommended)
+
+```bash
+python -m venv venv
+source venv/bin/activate        # macOS/Linux
+venv\Scripts\activate           # Windows
+```
+
+### 3. Install Dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-## ⚙️ Setup
+---
 
-The project includes a training script to generate the model artifacts. Run this once before starting the app:
+## 🚀 Usage
+
+### Step 1 — Train the Model
+
+Run this **once** to generate the model artifacts in the `model/` directory:
 
 ```bash
 python train_model.py
 ```
-*This will create the `model/` directory containing `model.pkl` and `tfidf.pkl`.*
 
-## ▶️ Usage
+This creates:
+- `model/model.pkl` — Trained Logistic Regression classifier
+- `model/tfidf.pkl` — Fitted TF-IDF vectorizer
 
-1.  Run the application:
-    ```bash
-    streamlit run app.py
-    ```
+### Step 2 — Launch the App
 
-2.  Open your browser (usually at `http://localhost:8501`).
-3.  Paste a news article or claim into the text area.
-4.  Click **"Analyze Credibility"**.
-5.  View the **Prediction**, **Confidence Score**, and **Final Verdict**.
+```bash
+streamlit run app.py
+```
+
+Open your browser at **http://localhost:8501**
+
+### Step 3 — Analyze a Claim
+
+1. Paste a news article or claim into the text area
+2. Click **"Analyze Credibility"**
+3. View the **Prediction**, **Confidence Score**, **Evidence Summary**, and **Final Verdict**
 
 ---
 
-## 🧩 Project Architecture
+## 🧩 Architecture
 
-```mermaid
-graph TD
-    A[User Input] --> B(Preprocessing);
-    B --> C{Analysis};
-    C -->|Linguistic Features| D[ML Model (Logistic Regression)];
-    C -->|Keywords| E[Evidence Retrieval (Wikipedia)];
-    D --> F[Prediction & Confidence];
-    E --> G[Context Summary];
-    F --> H[Verdict Logic];
-    G --> H;
-    H --> I[Final Output Display];
+```
+User Input
+    │
+    ▼
+Preprocessing (NLTK)
+    │
+    ├──────────────────────┐
+    ▼                      ▼
+TF-IDF Features       Keyword Extraction
+    │                      │
+    ▼                      ▼
+ML Model              Wikipedia Evidence
+(Logistic Regression)     Retrieval
+    │                      │
+    ▼                      ▼
+Prediction &          Context Summary
+Confidence Score
+    │                      │
+    └──────────┬───────────┘
+               ▼
+          Verdict Logic
+               │
+               ▼
+        Final Output Display
+     (Credible / Uncertain /
+      Potentially Misleading)
 ```
 
-## 🔮 Future Improvements
+### Verdict Mapping
 
-*   **Knowledge Graph Integration**: To map entities and relationships for deeper fact-checking.
-*   **Transformer Models**: upgrading to BERT/RoBERTa for better semantic understanding.
-*   **Real-time News API**: Checking against live news sources instead of static Wikipedia.
+| Condition | Verdict |
+|---|---|
+| High confidence + Evidence found | ✅ Credible |
+| Medium confidence or No evidence | ⚠️ Uncertain |
+| Low confidence + Contradictory signals | ❌ Potentially Misleading |
+
+---
+
+## 🔮 Roadmap
+
+- [ ] **Transformer Models** — Upgrade to BERT / RoBERTa for semantic understanding
+- [ ] **Real-time News API** — Cross-reference against live news sources
+- [ ] **Knowledge Graph Integration** — Map entities and relationships for deeper fact-checking
+- [ ] **Multi-language Support** — Extend detection beyond English
+- [ ] **Browser Extension** — In-browser real-time detection
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! To get started:
+
+1. Fork the repository
+2. Create your feature branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m 'Add your feature'`
+4. Push to the branch: `git push origin feature/your-feature`
+5. Open a Pull Request
 
 ---
 
 ## 📄 License
 
-This project is open-source and available for educational purposes.
+This project is open-source and available under the [MIT License](LICENSE).
+
+---
+
+## 👩‍💻 Author
+
+**Shree Kumbhar**  
+[![GitHub](https://img.shields.io/badge/GitHub-ShreeKumbhar-181717?style=flat&logo=github)](https://github.com/ShreeKumbhar)
+
+---
+
+<div align="center">
+⭐ If you found this project useful, please consider giving it a star!
+</div>
